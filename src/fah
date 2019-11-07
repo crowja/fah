@@ -1,0 +1,35 @@
+#! /usr/bin/env python3
+
+import os
+import subprocess
+import sys
+
+a = os.path.split(sys.argv[0])
+# print(a[0], a[1])
+
+if len(sys.argv) > 1:
+    b = sys.argv[1:]
+    cmd = f"fah-{b[0]}"
+    b[0] = os.path.join(a[0], cmd)
+    # print("b is ", b)
+    # quit()
+    try:
+        subprocess.run(b)
+    except FileNotFoundError:
+        print("Nope, that tool is not found")
+    except:
+        pass
+
+
+else:
+    text = """
+fah -- fasta helpers
+usage:
+  fah cat [ARGS]               Read a fasta file or stream, write to stdout.
+  fah longest [ARGS]           Read a fasta file or stream, write the longest sequence to stdout.
+  fah make-fake [ARGS]         Generate random nucleotide sequences, write to stdout.
+  fah make-mutations [ARGS]]   Generate random nucleotide sequences, write to stdout.
+  fah summarize [ARGS]         Read a fasta file or stream, write a summary to stdout.
+  fah tidy [ARGS]              Read a fasta file or stream, write a tidy version to stdout.
+           """
+    print(text)
