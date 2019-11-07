@@ -16,7 +16,7 @@ if len(sys.argv) > 1:
     try:
         subprocess.run(b)
     except FileNotFoundError:
-        print("Nope, that tool is not found")
+        print(f"Nope, {cmd} is not a valid command.")
     except:
         pass
 
