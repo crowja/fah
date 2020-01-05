@@ -4,6 +4,8 @@ import os
 import subprocess
 import sys
 
+VERSION = "0.0.0"
+
 a = os.path.split(sys.argv[0])
 # print(a[0], a[1])
 
@@ -29,6 +31,7 @@ usage:
   fah longest [ARGS]           Read a fasta file or stream, write the longest sequence to stdout.
   fah make-fake [ARGS]         Generate random nucleotide sequences, write to stdout.
   fah make-mutations [ARGS]]   Generate random nucleotide sequences, write to stdout.
+  fah select [ARGS]            Read a fasta file or stream, write selected sequences to stdout.
   fah summarize [ARGS]         Read a fasta file or stream, write a summary to stdout.
   fah tidy [ARGS]              Read a fasta file or stream, write a tidy version to stdout.
            """
