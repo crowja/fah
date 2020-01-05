@@ -1,0 +1,51 @@
+#! /usr/bin/env python
+
+import sys
+import argparse
+from Bio import SeqIO
+import numpy as np
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "infile", nargs="?", default=sys.stdin, help="filename (default: stdin)"
+)
+parser.add_argument(
+    "-m",
+    "--mean-len",
+    type=float,
+    default=100,
+    action="store",
+    help="mean fragment length",
+)
+parser.add_argument(
+    "-c", "--coverage", type=float, default=1, action="store", help="coverage"
+)
+args = parser.parse_args()
+
+count = 0
+
+for r in SeqIO.parse(args.infile, "fasta"):
+    sid = str(r.id)
+    stext = str(r.seq)
+    desc = str(r.description)
+    max_tries = 1 + 2 * int(args.coverage * len(stext) / args.mean_len)
+    need_hits = 1 + int(args.coverage * len(stext) / args.mean_len)
+    # print("Max_tries: ", max_tries)
+    tries = 0
+    hits = 0
+    while True:
+        size = np.random.poisson(lam=args.mean_len)
+        idx = np.random.randint(0, len(stext))
+        if idx + size < len(stext):
+            #print("Hit")
+            count += 1
+            hits += 1
+            print(f">{count} source=\"{sid}\"\n{stext[idx:idx + size - 1]}")
+            if hits == need_hits:
+                break
+        else:
+            pass
+            #print("Miss")
+        tries += 1
+        if tries == max_tries:
+            break
