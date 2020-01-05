@@ -11,8 +11,6 @@ parser.add_argument(
 parser.add_argument("-i", "--id", action="append", help="Seq id to select, multiples okay")
 args = parser.parse_args()
 
-##print(args.id)
-##quit()
 if args.id:
     for r in SeqIO.parse(args.infile, "fasta"):
         id = str(r.id)
