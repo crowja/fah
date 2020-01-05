@@ -28,6 +28,7 @@ else:
 fah -- fasta helpers
 usage:
   fah cat [ARGS]               Read a fasta file or stream, write to stdout.
+  fah fragger [ARGS]           Read a fasta file or stream, write each fragmented seq to stdout.
   fah longest [ARGS]           Read a fasta file or stream, write the longest sequence to stdout.
   fah make-fake [ARGS]         Generate random nucleotide sequences, write to stdout.
   fah make-mutations [ARGS]]   Generate random nucleotide sequences, write to stdout.
