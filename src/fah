@@ -23,7 +23,7 @@ if len(sys.argv) > 1:
 
 else:
     text = """
-fah 1.0.0
+fah 1.1.0-dev0
 fasta helpers
 usage:
   fah cat [ARGS]               Read a fasta file or stream, write to stdout.
