@@ -2,25 +2,16 @@
 
 import sys
 import argparse
-import re
 from Bio import SeqIO
-
-re1 = re.compile(r"[^acgtuACGTU]")
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
     "infile", nargs="?", default=sys.stdin, help="filename (default: stdin)"
-)
-parser.add_argument(
-    "--show-lens", action="store_true", help="show all sequence lengths"
 )
 args = parser.parse_args()
 
 for r in SeqIO.parse(args.infile, "fasta"):
     stext = str(r.seq)
     desc = str(r.description)
-    if args.show_lens:
-        print(f">{desc} length={len(stext)}")
-    else:
-        print(f">{desc}")
+    print(f">{desc}")
     print(f"{stext}")
