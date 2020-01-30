@@ -4,8 +4,6 @@ import os
 import subprocess
 import sys
 
-VERSION = "0.1.0-dev0"
-
 a = os.path.split(sys.argv[0])
 # print(a[0], a[1])
 
@@ -25,7 +23,8 @@ if len(sys.argv) > 1:
 
 else:
     text = """
-fah -- fasta helpers
+fah 0.0.0
+fasta helpers
 usage:
   fah cat [ARGS]               Read a fasta file or stream, write to stdout.
   fah fragger [ARGS]           Read a fasta file or stream, write each fragmented seq to stdout.
