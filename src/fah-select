@@ -8,7 +8,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument(
     "infile", nargs="?", default=sys.stdin, help="filename (default: stdin)"
 )
-parser.add_argument("-i", "--id", action="append", help="Seq id to select, multiples okay")
+parser.add_argument(
+    "-i", "--id", action="append", help="Seq id to select, multiples okay"
+)
 args = parser.parse_args()
 
 if args.id:

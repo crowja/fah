@@ -26,7 +26,7 @@ for r in SeqIO.parse(args.infile, "fasta"):
     slen = len(stext)
     # sid = str(r.id)
     len_str = f"length={slen}"
-    if len_str in desc:
+    if len_str in desc:  # see if length=xxxxx is already in the description
         print(f">{desc}")
     else:
         print(f">{desc} length={slen}")
