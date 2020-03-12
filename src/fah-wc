@@ -1,0 +1,95 @@
+#! /usr/bin/env python
+
+import sys
+import argparse
+import textwrap
+from Bio import SeqIO
+from Bio.Seq import Seq
+
+at_counts = 0
+gc_counts = 0
+counts = {}
+
+
+def update(word):
+    global at_counts, gc_counts, counts
+    all_acgt = True
+
+    for c in word:
+        if c == "a" or c == "t":
+            at_counts += 1
+        elif c == "g" or c == "c":
+            gc_counts += 1
+        else:
+            all_acgt = False
+
+    if all_acgt:
+        if word not in counts:
+            counts[word] = 0
+        counts[word] += 1
+        rc_word = str(Seq(word).reverse_complement())
+        if rc_word not in counts:
+            counts[rc_word] = 0
+            pass
+        counts[rc_word] += 1
+
+def simple_word_prob(word, fat, fgc):
+    p = 1
+    for c in word:
+        if c == "a" or c == "t":
+            p *= fat / 2
+        elif c == "c" or c == "g":
+            p *= fgc / 2
+        else:
+            print(f"oops, a word with non-acgt {word}", file=sys.stderr)
+            exit(1)
+
+    return p
+
+def print_stats_0():
+    global at_counts, gc_counts, counts
+    t = at_counts + gc_counts
+    fat = at_counts / t
+    fgc = gc_counts / t
+    print(f"f_at {fat} f_gc {fgc}")
+
+    t = 0
+    for word in counts: 
+        t += counts[word]
+
+    for word in counts:
+        fobs = counts[word] / t
+        record = []
+        print(f"{word}\t{fobs / simple_word_prob(word, fat, fgc) :0.3f}")
+
+def print_stats():
+    global counts
+    sorted_counts = sorted(counts.items(), key=lambda x: x[1])
+    for item in sorted_counts:
+        print(f"{item[0]}\t{item[1]}")
+  
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "infile", nargs="?", default=sys.stdin, help="filename (default: stdin)"
+)
+parser.add_argument(
+    "-w",
+    "--word-size",
+    type=int,
+    action="store",
+    dest="wsize",
+    default=10,
+    help="word size, default 10",
+)
+
+args = parser.parse_args()
+
+for r in SeqIO.parse(args.infile, "fasta"):
+    stext = "".join(str(r.seq).split()).lower()
+    slen = len(stext)
+    for i in range(slen - args.wsize):
+        word = stext[i : i + args.wsize]
+        update(word)
+
+print_stats_0()
