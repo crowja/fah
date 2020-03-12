@@ -32,5 +32,7 @@ usage:
   fah select [ARGS]            Read a fasta file or stream, write selected sequences to stdout.
   fah summarize [ARGS]         Read a fasta file or stream, write a summary to stdout.
   fah tidy [ARGS]              Read a fasta file or stream, write a tidy version to stdout.
+  fah wc [ARGS]                Read a fasta file or stream, write kmer counts;
+  fah wcontext [ARGS]          Read a fasta file or stream, write sequence flanking a specified word;
            """
     print(text)
