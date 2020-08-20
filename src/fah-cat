@@ -6,12 +6,22 @@ from Bio import SeqIO
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
+    "--rev-comp",
+    "-r",
+    action="store_true",
+    default=False,
+    help="reverse complement output",
+)
+parser.add_argument(
     "infile", nargs="?", default=sys.stdin, help="filename (default: stdin)"
 )
 args = parser.parse_args()
 
 for r in SeqIO.parse(args.infile, "fasta"):
-    stext = str(r.seq)
+    if args.rev_comp:
+        stext = str(r.reverse_complement().seq)
+    else:
+        stext = str(r.seq)
     desc = str(r.description)
     print(f">{desc}")
     print(f"{stext}")
