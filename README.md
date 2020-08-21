@@ -8,6 +8,7 @@ or stdin and write to stdout. Requires Python 3, Bio.SeqIO, NumPy, heapq.
 *   fah fragger. Randomly fragment the input. Specify the average fragment size
     and coverage.
 *   fah longest. Write the N longest sequences from the input.
+*   fah random. Write random sequences.
 *   fah select. Write a specified set of of sequences to stdout.
 *   fah summarize. Summary statistics of the input.
 *   fah tidy. Tidy the input.
