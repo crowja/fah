@@ -3,6 +3,7 @@
 import sys
 import argparse
 from Bio import SeqIO
+from Bio.Seq import Seq
 import numpy as np
 
 parser = argparse.ArgumentParser()
@@ -19,6 +20,13 @@ parser.add_argument(
 )
 parser.add_argument(
     "-c", "--coverage", type=float, default=1, action="store", help="coverage"
+)
+parser.add_argument(
+    "-R",
+    "--random-strand",
+    default=False,
+    action="store_true",
+    help="choose the strand at random",
 )
 args = parser.parse_args()
 
@@ -37,15 +45,18 @@ for r in SeqIO.parse(args.infile, "fasta"):
         size = np.random.poisson(lam=args.mean_len)
         idx = np.random.randint(0, len(stext))
         if idx + size < len(stext):
-            #print("Hit")
+            # print("Hit")
             count += 1
             hits += 1
-            print(f">{count} source=\"{sid}\"\n{stext[idx:idx + size - 1]}")
+            outseq = stext[idx : idx + size - 1]
+            if args.random_strand and np.random.uniform() < 0.5:
+                outseq = str(Seq(outseq).reverse_complement())
+            print(f'>frag{count} source="{sid}"\n{outseq}')
             if hits == need_hits:
                 break
         else:
             pass
-            #print("Miss")
+            # print("Miss")
         tries += 1
         if tries == max_tries:
             break
