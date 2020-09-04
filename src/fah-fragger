@@ -6,7 +6,9 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 import numpy as np
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(
+    "Fragment a set of sequences, fragment lengths are Poisson-distributed."
+)
 parser.add_argument(
     "infile", nargs="?", default=sys.stdin, help="filename (default: stdin)"
 )
@@ -16,17 +18,22 @@ parser.add_argument(
     type=float,
     default=100,
     action="store",
-    help="mean fragment length",
+    help="mean fragment length, default 100",
 )
 parser.add_argument(
-    "-c", "--coverage", type=float, default=1, action="store", help="coverage"
+    "-c",
+    "--coverage",
+    type=float,
+    default=1.0,
+    action="store",
+    help="nominal coverage, default 1.0",
 )
 parser.add_argument(
     "-R",
     "--random-strand",
     default=False,
     action="store_true",
-    help="choose the strand at random",
+    help="choose the strand randomly, default forward only",
 )
 args = parser.parse_args()
 
@@ -49,9 +56,15 @@ for r in SeqIO.parse(args.infile, "fasta"):
             count += 1
             hits += 1
             outseq = stext[idx : idx + size - 1]
+            strand = "+"
+            start = idx + 1
+            end = idx + size - 1
             if args.random_strand and np.random.uniform() < 0.5:
                 outseq = str(Seq(outseq).reverse_complement())
-            print(f'>frag{count} source="{sid}"\n{outseq}')
+                strand = "-"
+            print(
+                f'>frag{count} source="{sid}" start="{start}" end="{end}" strand="{strand}"\n{outseq}'
+            )
             if hits == need_hits:
                 break
         else:
