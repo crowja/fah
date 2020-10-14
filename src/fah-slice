@@ -21,6 +21,9 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
+if args.one_based:
+    args.start -= 1
+
 for r in SeqIO.parse(args.infile, "fasta"):
     #print(SeqIO.write(r[args.start : args.end], sys.stdout, "fasta"))
     s = r[args.start : args.end]
