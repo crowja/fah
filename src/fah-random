@@ -4,19 +4,50 @@ import sys
 import argparse
 import numpy as np
 
+charset = {}
+charset["peptide"] = [
+    "A",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "K",
+    "L",
+    "M",
+    "N",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "V",
+    "W",
+    "Y",
+    "X",
+]
+charset["dna"] = ["A", "C", "G", "T", "N"]
+charset["rna"] = ["A", "C", "G", "U", "N"]
+
 parser = argparse.ArgumentParser()
 parser.add_argument(
     "-l",
     "--len",
     type=int,
-    default=1000,
-    help="mean length of output sequences, default LEN=1000",
+    default=100,
+    help="mean length of output sequences, default 100",
 )
 parser.add_argument(
-    "-n", "--num", type=int, default=1, help="number of sequences to generate"
+    "-n",
+    "--num",
+    type=int,
+    default=1,
+    help="number of sequences to generate, default 1",
 )
 parser.add_argument(
-    "-N", "--noise", type=float, default=0.0, help="frequency of N as a base"
+    "-N", "--noise", type=float, default=0.0, help="noise percentage, default 0.0"
 )
 parser.add_argument(
     "-r",
@@ -24,6 +55,13 @@ parser.add_argument(
     action="store_true",
     default=False,
     help="sequences have random length, Poisson-distributed with mean LEN",
+)
+parser.add_argument(
+    "-t",
+    "--type",
+    choices=["dna", "rna", "peptide"],
+    default="dna",
+    help="type of sequence",
 )
 args = parser.parse_args()
 
@@ -33,17 +71,24 @@ if args.noise < 0 or args.noise > 100:
         file=sys.stderr,
     )
     exit(1)
+if args.len < 1:
+    print(
+        f"[ERROR] target sequence length needs to be greater than 0, specified {args.len}",
+        file=sys.stderr,
+    )
+    exit(1)
 
-pn = args.noise / 100
-pothers = (1 - pn) / 4
+pn = args.noise / 100.0
+po = (1 - pn) / (len(charset[args.type]) - 1)
+probs = np.full(len(charset[args.type]), po)
+probs[-1] = pn  # final position is the noise symbol
 
 for i in range(args.num):
     if args.rand:
-        seqlen = np.random.poisson(args.len)
+        seqlen = max(1, np.random.poisson(args.len))
     else:
         seqlen = args.len
 
-    ##print(seqlen)
-    bases = np.random.choice(["A", "C", "G", "T", "N"], size=seqlen, p = [pothers, pothers, pothers, pothers, pn])
+    chars = np.random.choice(charset[args.type], size=seqlen, p=probs,)
     print(f">{i + 1}")
-    print(f"{''.join(bases)}")
+    print(f"{''.join(chars)}")
