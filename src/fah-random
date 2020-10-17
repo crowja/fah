@@ -21,24 +21,24 @@ parser.add_argument(
     "--len",
     type=int,
     default=100,
-    help="mean length of output sequences, default 100",
+    help="mean length of output sequences, default 100.",
 )
 parser.add_argument(
     "-n",
     "--num",
     type=int,
     default=1,
-    help="number of sequences to generate, default 1",
+    help="number of sequences to generate, default 1.",
 )
 parser.add_argument(
-    "-N", "--noise", type=float, default=0.0, help="noise percentage, default 0.0"
+    "-N", "--noise", type=float, default=0.0, help="noise percentage, default 0.0."
 )
 parser.add_argument(
     "-r",
     "--rand",
     action="store_true",
     default=False,
-    help="sequences have random length, Poisson-distributed with mean LEN",
+    help="sequences have random length, Poisson-distributed with mean LEN.",
 )
 parser.add_argument(
     "-t",
@@ -52,7 +52,7 @@ args = parser.parse_args()
 prefix = ""
 if args.label:
     tmp = re.sub(r"\W+", "_", args.label.strip())
-    if tmp:
+    if tmp:  # skip if args.label was all whitespace.
         prefix = tmp + ":"
 
 if args.noise < 0 or args.noise > 100:
