@@ -13,7 +13,7 @@ progs = {
     "summarize": "Read a fasta file or stream, write a summary to stdout.",
     "tidy": "Read a fasta file or stream, write a tidy version to stdout.",
     "wc": "Read a fasta file or stream, write kmer counts.",
-    "wcontext": "Read a fasta file or stream, write sequence flanking a specified word",
+    "wcontext": "Read a fasta file or stream, write sequence flanking a specified word.",
 }
 
 
