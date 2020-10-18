@@ -7,9 +7,9 @@ import sys
 
 # Character sets for sequence types. Noise symbol X/N needs to be final character.
 charset = {
-    "dna": [c for c in "ACGTN"],
-    "peptide": [c for c in "ACDEFGHIKLMNPQRSTVWYX"],
-    "rna": [c for c in "ACGUN"],
+    "DNA": [c for c in "ACGTN"],
+    "PEPTIDE": [c for c in "ACDEFGHIKLMNPQRSTVWYX"],
+    "RNA": [c for c in "ACGUN"],
 }
 
 parser = argparse.ArgumentParser()
@@ -43,9 +43,9 @@ parser.add_argument(
 parser.add_argument(
     "-t",
     "--type",
-    choices=["dna", "rna", "peptide"],
-    default="dna",
-    help="type of sequence",
+    choices=["DNA", "RNA", "PEPTIDE"],
+    default="DNA",
+    help="type of sequence(s) to generate.",
 )
 args = parser.parse_args()
 
