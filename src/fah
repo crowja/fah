@@ -23,10 +23,10 @@ def print_help():
 
         # Pretty-print the usage message.
         # Col 25 is where we want the brief description to appear; 14 is the combined
-        # length of "  fah " and " [ARGS] ".
-        offset = 25 - 14 - len(p)
+        # length of "  fah " and " [ARGS]. ".
+        offset = 25 - 16 - len(p)
         spacer = " " * offset
-        print(f"  fah {p} [ARGS]{spacer}{progs[p]}")
+        print(f"  fah {p} [ARGS]. {spacer}{progs[p]}")
 
 
 a = os.path.split(sys.argv[0])
