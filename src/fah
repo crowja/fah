@@ -4,35 +4,53 @@ import os
 import subprocess
 import sys
 
+progs = {
+    "cat": "Read a fasta file or stream, write to stdout.",
+    "fragger": "Read a fasta file or stream, write each fragmented seq to stdout.",
+    "longest": "Read a fasta file or stream, write the longest sequence to stdout.",
+    "random": "Generate a stream of random sequences in fasta format.",
+    "select": "Read a fasta file or stream, write selected sequences to stdout.",
+    "summarize": "Read a fasta file or stream, write a summary to stdout.",
+    "tidy": "Read a fasta file or stream, write a tidy version to stdout.",
+    "wc": "Read a fasta file or stream, write kmer counts.",
+    "wcontext": "Read a fasta file or stream, write sequence flanking a specified word",
+}
+
+
+def print_help():
+    print("fah 1.2.0-dev0\nfasta helpers.\nusage:")
+    for p in sorted(progs):
+
+        # Pretty-print the usage message.
+        # Col 25 is where we want the brief description to appear; 14 is the combined
+        # length of "  fah " and " [ARGS] ".
+        offset = 25 - 14 - len(p)
+        spacer = " " * offset
+        print(f"  fah {p} [ARGS]{spacer}{progs[p]}")
+
+
 a = os.path.split(sys.argv[0])
 # print(a[0], a[1])
 
 if len(sys.argv) > 1:
     b = sys.argv[1:]
+    if b[0] == "-h" or b[0] == "--help":
+        print_help()
+        exit(0)
+    if b[0] not in progs:
+        print(f"[ERROR] 'fah {b[0]}' is not valid, try 'fah --help'.", file=sys.stderr)
+        exit(1)
     cmd = f"fah-{b[0]}"
     b[0] = os.path.join(a[0], cmd)
-    # print("b is ", b)
-    # quit()
     try:
         subprocess.run(b)
-    except FileNotFoundError:
-        print(f"Nope, {cmd} is not a valid command.")
     except:
-        pass
-
+        print(f"[ERROR] {b[0]} not found.", file=sys.stderr)
+        exit(1)
+    """
+        except FileNotFoundError:
+            pass
+    """
 
 else:
-    text = """
-fah 1.2.0-dev0
-fasta helpers
-usage:
-  fah cat [ARGS]               Read a fasta file or stream, write to stdout.
-  fah fragger [ARGS]           Read a fasta file or stream, write each fragmented seq to stdout.
-  fah longest [ARGS]           Read a fasta file or stream, write the longest sequence to stdout.
-  fah select [ARGS]            Read a fasta file or stream, write selected sequences to stdout.
-  fah summarize [ARGS]         Read a fasta file or stream, write a summary to stdout.
-  fah tidy [ARGS]              Read a fasta file or stream, write a tidy version to stdout.
-  fah wc [ARGS]                Read a fasta file or stream, write kmer counts;
-  fah wcontext [ARGS]          Read a fasta file or stream, write sequence flanking a specified word;
-           """
-    print(text)
+    print_help()
