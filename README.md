@@ -1,4 +1,4 @@
-# fah 1.2.0-dev0.
+# fah 1.3.0-dev0.
 
 Helpers for working with files and streams in FASTA format. All read from a file
 or stdin and write to stdout. Requires Python 3, Bio.SeqIO, NumPy, heapq.
