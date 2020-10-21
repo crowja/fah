@@ -22,26 +22,34 @@ def extract_and_pad(istart, iend, stext):
     return f"{leftws}{stext[istart:iend]}{rightws}"
 
 
-def print_contexts(r, word, num_chars):
+def print_contexts(r, pattern, args):
     sid = str(r.id)
     stext = str(r.seq).lower()
     slen = len(stext)
-    for m in re.finditer(word, stext):
-        istart = m.start() - num_chars
-        iend = m.end() + num_chars
+
+    for m in re.finditer(pattern, stext):
+        istart = m.start() - args.num_chars
+        iend = m.end() + args.num_chars
         print(f"{extract_and_pad(istart, iend, stext)}\t{sid}\t+")
 
     stext = str(r.seq.reverse_complement()).lower()
     slen = len(stext)
-    for m in re.finditer(word, stext):
-        istart = m.start() - num_chars
-        iend = m.end() + num_chars
+    for m in re.finditer(pattern, stext):
+        istart = m.start() - args.num_chars
+        iend = m.end() + args.num_chars
         print(f"{extract_and_pad(istart, iend, stext)}\t{sid}\t-")
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
     "infile", nargs="?", default=sys.stdin, help="filename (default: stdin)."
+)
+parser.add_argument(
+    "-1",
+    "--single-mismatch",
+    action="store_true",
+    default=False,
+    help="allow a single mismatch to WORD.",
 )
 parser.add_argument(
     "-n",
@@ -61,13 +69,25 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-if not args.word or args.num_chars < 1:
+# Quick exit.
+if not args.word or args.num_chars < 0:
     exit(0)
 else:
     word = args.word.lower()
+
+# Get the search pattern, either the specified word or a single mismatch.
+if args.single_mismatch:
+    patterns = []
+    for i in range(len(word)):
+        patterns.append(word[:i] + "." + word[i + 1 :])
+    pattern = "|".join(patterns)
+else:
+    pattern = word
 
 for r in SeqIO.parse(args.infile, "fasta"):
     stext = str(r.seq).lower()
     slen = len(stext)
     sid = str(r.id)
-    print_contexts(r, word, args.num_chars)
+    print_contexts(r, pattern, args)
+
+0
