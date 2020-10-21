@@ -5,50 +5,69 @@ import argparse
 import re
 from Bio import SeqIO
 
+
 def extract_and_pad(istart, iend, stext):
     slen = len(stext)
     if istart < 0:
-       leftws = " " * abs(istart)
-       istart = 0
+        leftws = " " * abs(istart)
+        istart = 0
     else:
-       leftws = ""
+        leftws = ""
     if iend >= slen:
-       rightws = " " * (iend - slen)
-       iend = slen
+        rightws = " " * (iend - slen)
+        iend = slen
     else:
-       rightws = ""
+        rightws = ""
 
     return f"{leftws}{stext[istart:iend]}{rightws}"
 
-def print_contexts(r, word):
+
+def print_contexts(r, word, num_chars):
     sid = str(r.id)
     stext = str(r.seq).lower()
     slen = len(stext)
     for m in re.finditer(word, stext):
-        istart = m.start() - 20
-        iend = m.end() + 20
+        istart = m.start() - num_chars
+        iend = m.end() + num_chars
         print(f"{extract_and_pad(istart, iend, stext)}\t{sid}\t+")
 
     stext = str(r.seq.reverse_complement()).lower()
     slen = len(stext)
     for m in re.finditer(word, stext):
-        istart = m.start() - 20
-        iend = m.end() + 20
+        istart = m.start() - num_chars
+        iend = m.end() + num_chars
         print(f"{extract_and_pad(istart, iend, stext)}\t{sid}\t-")
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    "infile", nargs="?", default=sys.stdin, help="filename (default: stdin)"
+    "infile", nargs="?", default=sys.stdin, help="filename (default: stdin)."
 )
 parser.add_argument(
-    "-w", "--word", dest="word", help="search for context of WORD"
+    "-n",
+    "--num-chars",
+    dest="num_chars",
+    type=int,
+    default=20,
+    help="display NUM_CHARS characters to the left and right of WORD.",
+)
+parser.add_argument(
+    "-w",
+    "--word",
+    dest="word",
+    type=str,
+    default=False,
+    help="search for context of WORD.",
 )
 args = parser.parse_args()
 
-word = args.word.lower()
+if not args.word or args.num_chars < 1:
+    exit(0)
+else:
+    word = args.word.lower()
 
 for r in SeqIO.parse(args.infile, "fasta"):
     stext = str(r.seq).lower()
     slen = len(stext)
     sid = str(r.id)
-    print_contexts(r, word)
+    print_contexts(r, word, args.num_chars)
