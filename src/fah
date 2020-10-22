@@ -34,9 +34,11 @@ def print_help():
             )
         )
 
+
 def print_help_as_markdown_list():
     for p in sorted(progs):
         print(f"* `fah {p} [ARGS]`. {progs[p]}")
+
 
 def print_version():
     print(f"fah {__version__}")
