@@ -3,6 +3,7 @@
 import os
 import subprocess
 import sys
+import textwrap
 
 __version__ = "1.5.2"
 
@@ -22,13 +23,20 @@ progs = {
 def print_help():
     print(f"fah {__version__}\nfasta helpers.\nusage:")
     for p in sorted(progs):
+        spacer = " " * (18 - 6 - len(p))
+        print(
+            "\n".join(
+                textwrap.wrap(
+                    progs[p],
+                    initial_indent=f"fah {p}. {spacer}",
+                    subsequent_indent=" " * 18,
+                )
+            )
+        )
 
-        # Pretty-print the usage message.
-        # Col 25 is where we want the brief description to appear; 14 is the combined
-        # length of "  fah " and " [ARGS]. ".
-        offset = 25 - 16 - len(p)
-        spacer = " " * offset
-        print(f"  fah {p} [ARGS]. {spacer}{progs[p]}")
+def print_help_as_markdown_list():
+    for p in sorted(progs):
+        print(f"* `fah {p} [ARGS]`. {progs[p]}")
 
 def print_version():
     print(f"fah {__version__}")
@@ -41,6 +49,9 @@ if len(sys.argv) > 1:
     b = sys.argv[1:]
     if b[0] == "-h" or b[0] == "--help":
         print_help()
+        exit(0)
+    if b[0] == "-m" or b[0] == "--markdown":
+        print_help_as_markdown_list()
         exit(0)
     if b[0] == "-V" or b[0] == "--version":
         print_version()
