@@ -35,9 +35,10 @@ def print_contexts(r, pattern, args):
     if args.type == "PEPTIDE":
         return
 
+    # For DNA and RNA seqs check the reverse complement also.
     if args.type == "DNA":
         stext = str(r.seq.reverse_complement()).lower()
-    else:  # RNA, need to transcribe after reverse complement
+    else:  # RNA, need to transcribe after reverse complement.
         stext = str(r.seq.reverse_complement().transcribe()).lower()
     slen = len(stext)
 
@@ -49,9 +50,10 @@ def print_contexts(r, pattern, args):
 
 parser = argparse.ArgumentParser(
     description="Report subsequence flanking a query word.",
-    epilog="Characters to the left and right of WORD are reported. For "
-    "nucleotide sequences (DNA, RNA) the reverse complement is searched "
-    "also.",
+    epilog="Each input sequence is searched for WORD and NUM_CHARS characters "
+    "to the left and right are reported. For nucleotide sequences (DNA, RNA) "
+    "the reverse complement is also searched and the hit strand is indicated "
+    "by +/-.",
 )
 parser.add_argument(
     "infile", nargs="?", default=sys.stdin, help="filename (default: stdin)."
