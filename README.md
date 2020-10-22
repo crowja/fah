@@ -15,7 +15,8 @@ or stdin and write to stdout. Requires Python 3, Bio.SeqIO, NumPy, heapq.
     stdout.
 *   `fah tidy [ARGS]`. Read a fasta file or stream, write a tidy version to
     stdout.
-*   `fah wc [ARGS]`. Read a fasta file or stream, write kmer counts.
+*   `fah wc [ARGS]`. Read a fasta file or stream of nuceotide sequences, write
+    kmer counts.
 *   `fah wcontext [ARGS]`. Read a fasta file or stream, write sequence flanking
     a specified word.
 
