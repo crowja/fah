@@ -36,6 +36,7 @@ def print_contexts(r, pattern, args):
         return
 
     # For DNA and RNA seqs check the reverse complement also.
+
     if args.type == "DNA":
         stext = str(r.seq.reverse_complement()).lower()
     else:  # RNA, need to transcribe after reverse complement.
