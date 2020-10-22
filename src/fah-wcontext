@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 
-import sys
 import argparse
 import re
+import sys
 from Bio import SeqIO
 
 
@@ -30,17 +30,29 @@ def print_contexts(r, pattern, args):
     for m in re.finditer(pattern, stext):
         istart = m.start() - args.num_chars
         iend = m.end() + args.num_chars
-        print(f"{extract_and_pad(istart, iend, stext)}\t{sid}\t+")
+        print(f"{extract_and_pad(istart, iend, stext)}\t+\t{sid}")
 
-    stext = str(r.seq.reverse_complement()).lower()
+    if args.type == "PEPTIDE":
+        return
+
+    if args.type == "DNA":
+        stext = str(r.seq.reverse_complement()).lower()
+    else:  # RNA, need to transcribe after reverse complement
+        stext = str(r.seq.reverse_complement().transcribe()).lower()
     slen = len(stext)
+
     for m in re.finditer(pattern, stext):
         istart = m.start() - args.num_chars
         iend = m.end() + args.num_chars
-        print(f"{extract_and_pad(istart, iend, stext)}\t{sid}\t-")
+        print(f"{extract_and_pad(istart, iend, stext)}\t-\t{sid}")
 
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(
+    description="Report subsequence flanking a query word.",
+    epilog="Characters to the left and right of WORD are reported. For "
+    "nucleotide sequences (DNA, RNA) the reverse complement is searched "
+    "also.",
+)
 parser.add_argument(
     "infile", nargs="?", default=sys.stdin, help="filename (default: stdin)."
 )
@@ -60,6 +72,13 @@ parser.add_argument(
     help="display NUM_CHARS characters to the left and right of WORD.",
 )
 parser.add_argument(
+    "-t",
+    "--type",
+    choices=["DNA", "RNA", "PEPTIDE"],
+    default="DNA",
+    help="input sequence is of type TYPE, default DNA.",
+)
+parser.add_argument(
     "-w",
     "--word",
     dest="word",
@@ -72,7 +91,13 @@ args = parser.parse_args()
 # Quick exit.
 if not args.word or args.num_chars < 0:
     exit(0)
-else:
+
+# For DNA and RNA queries try to coerce the query to the proper character set.
+if args.type == "DNA":
+    word = args.word.lower().replace("u", "t")
+elif args.type == "RNA":
+    word = args.word.lower().replace("t", "u")
+else:  # PEPTIDE
     word = args.word.lower()
 
 # Get the search pattern, either the specified word or a single mismatch.
