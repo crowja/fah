@@ -15,7 +15,7 @@ progs = {
     "select": "Read a fasta file or stream, write selected sequences to stdout.",
     "summarize": "Read a fasta file or stream, write a summary to stdout.",
     "tidy": "Read a fasta file or stream, write a tidy version to stdout.",
-    "wc": "Read a fasta file or stream, write kmer counts.",
+    "wc": "Read a fasta file or stream of nucleotide sequence, write kmer abundance.",
     "wcontext": "Read a fasta file or stream, write sequence flanking a specified word.",
 }
 
