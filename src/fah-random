@@ -12,12 +12,15 @@ charset = {
     "RNA": [c for c in "ACGUN"],
 }
 
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    "-l", "--label", default=False, help="prefix for the sequence ids.",
-)
+parser = argparse.ArgumentParser(epilog="Specify SEED to generate the same sequences.")
 parser.add_argument(
     "-L",
+    "--label",
+    default=False,
+    help="prefix for the sequence ids.",
+)
+parser.add_argument(
+    "-l",
     "--len",
     type=int,
     default=100,
@@ -39,6 +42,13 @@ parser.add_argument(
     action="store_true",
     default=False,
     help="sequences have random length, Poisson-distributed with mean LEN.",
+)
+parser.add_argument(
+    "-s",
+    "--seed",
+    type=int,
+    default=False,
+    help="random number generator seed.",
 )
 parser.add_argument(
     "-t",
@@ -73,12 +83,23 @@ po = (1 - pn) / (len(charset[args.type]) - 1)
 probs = np.full(len(charset[args.type]), po)
 probs[-1] = pn  # final position is the noise symbol
 
+if args.seed:
+    rng = np.random.default_rng(np.random.PCG64(args.seed))
+else:
+    rng = np.random.default_rng()
+
 for i in range(args.num):
     if args.rand:
-        seqlen = max(1, np.random.poisson(args.len))
+        ##seqlen = max(1, np.random.poisson(args.len))
+        seqlen = max(1, rng.poisson(args.len))
     else:
         seqlen = args.len
 
-    chars = np.random.choice(charset[args.type], size=seqlen, p=probs,)
+    ##chars = np.random.choice(charset[args.type], size=seqlen, p=probs,)
+    chars = rng.choice(
+        charset[args.type],
+        size=seqlen,
+        p=probs,
+    )
     print(f">{prefix}{i + 1}")
     print(f"{''.join(chars)}")
