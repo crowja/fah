@@ -13,6 +13,7 @@ progs = {
     "longest": "Read a fasta file or stream, write the longest sequence to stdout.",
     "random": "Generate a stream of random sequences in fasta format.",
     "select": "Read a fasta file or stream, write selected sequences to stdout.",
+    "sizes": "Read a fasta file or stream, write the sequence sizes to stdout.",
     "summarize": "Read a fasta file or stream, write a summary to stdout.",
     "tidy": "Read a fasta file or stream, write a tidy version to stdout.",
     "wc": "Read a fasta file or stream of nucleotide sequence, write kmer abundance.",
