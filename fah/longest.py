@@ -7,7 +7,7 @@ def main():
     ap = argparse.ArgumentParser(
         prog="fah longest",
         description="""
-        Read sequence data in fasta format, write the k longest sequences to stdout.
+        Read sequence data in fasta format, write the N longest sequences to stdout.
         """,
     )
     ap.add_argument(
