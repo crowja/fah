@@ -1,0 +1,82 @@
+#! /usr/bin/env python3
+
+import inspect
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+VERSION = "1.0.0"
+
+ansi_colors = {
+    "reset": "\x1B[0m",
+    "red": "\x1B[1;31m",
+    "green": "\x1B[1;32m",
+    "yellow": "\x1B[1;33m",
+}
+
+
+def print_msg_and_usage(msg=False):
+    if msg:
+        print(msg, file=sys.stdout)
+
+    usage = inspect.cleandoc(
+        # TODO
+        """
+    usage:
+    fah -h|--help.    TBD.
+    fah -V|--version. TBD.
+    fah XXX [ARGS].   TBD.
+    fah abc [ARGS].   TBD.
+    """
+    )
+    print(f"{usage}")
+
+
+def print_version():
+    print(f"fah {VERSION}")
+
+
+if __name__ == "__main__":
+    if len(sys.argv) == 1:
+        print_msg_and_usage()
+        exit(0)
+
+    elif sys.argv[1] in ["-V", "--version"]:
+        print_version()
+        exit(0)
+
+    elif sys.argv[1] in ["-h", "--help"]:
+        print_msg_and_usage()
+        exit(0)
+
+    elif sys.argv[1] == "XXX":
+        sys.argv.pop(1)
+        from fah import XXX
+
+        XXX.main()
+
+    elif sys.argv[1] == "cat":
+        sys.argv.pop(1)
+        from fah import cat
+
+        cat.main()
+
+    elif sys.argv[1] == "longest":
+        sys.argv.pop(1)
+        from fah import longest
+
+        longest.main()
+
+    elif sys.argv[1] == "select":
+        sys.argv.pop(1)
+        from fah import select
+
+        select.main()
+
+    else:
+        print_msg_and_usage(
+            f'{ansi_colors["red"]}[ERROR]{ansi_colors["reset"]} '
+            f'fah: subcommand "{sys.argv[1]}" not recognized.'
+        )
+        exit(1)
