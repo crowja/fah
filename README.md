@@ -31,6 +31,14 @@ fah longest [-h] [-n N] [infile]
 
 Read sequence data in fasta format, write the N longest sequences to stdout.
 
+    positional arguments:
+      infile       read from INFILE, default stdin
+
+    options:
+      -h, --help   show this help message and exit
+      -n N, --n N  write the N longest sequences to stdout, default 10
+
+
 ### `fah select`
 
 ```
