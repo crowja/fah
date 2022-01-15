@@ -11,6 +11,18 @@ fah cat [-h] [-C {upper,lower}] [-w WIDTH] [infile]
 Read sequence data in fasta format, write to stdout. By default sequences are written as a single
 header line and a single line of sequence text.
 
+```
+positional arguments:
+  infile                read from INFILE, default stdin
+
+options:
+  -h, --help            show this help message and exit
+  -C {upper,lower}, --to-case {upper,lower}
+                        force the case of sequence text
+  -w WIDTH, --width WIDTH
+                        width of sequence text, default written as a single line
+```
+
 ### `fah longest`
 
 ```
