@@ -58,21 +58,27 @@ if __name__ == "__main__":
 
     elif sys.argv[1] == "cat":
         sys.argv.pop(1)
-        from fah import cat
+        import fah.cat
 
-        cat.main()
+        fah.cat.main()
 
     elif sys.argv[1] == "longest":
         sys.argv.pop(1)
-        from fah import longest
+        import fah.longest
 
-        longest.main()
+        fah.longest.main()
+
+    elif sys.argv[1] == "random":
+        sys.argv.pop(1)
+        import fah.random
+
+        fah.random.main()
 
     elif sys.argv[1] == "select":
         sys.argv.pop(1)
-        from fah import select
+        import fah.select
 
-        select.main()
+        fah.select.main()
 
     else:
         print_msg_and_usage(
