@@ -1,11 +1,22 @@
 #! /usr/bin/env python3
 
+import math
+import random
 import re
 import sys
 
 # Have a look at https://www.programiz.com/python-programming/generator to see a few examples.
 
 # Also for the ransom option https://www.geeksforgeeks.org/python-random-uppercase-in-strings/#:~:text=Method%20%231%20%3A%20Using%20join%20%28%29%20%2B%20choice,perform%20task%20of%20uppercasing%20and%20lowercasing%20characters%20respectively.
+
+
+class GeometricRandomVariate:
+    def __init__(self, mean):
+        self.mu = 1.0 / math.log(1 + 1 / mean)
+
+    def next(self):
+        u = 1.0 - random.random()  # 1 - v since 0 <= v < 1
+        return int(-self.mu * math.log(u))
 
 
 class FastaReader:
@@ -118,3 +129,7 @@ if __name__ == "__main__":
     while pq.len() > 0:
         priority, animal = pq.get()
         print(f"{priority} --> {animal}")
+
+    b = GeometricRandomVariate(10.0)
+    for _ in range(10):
+        print(b.next())
