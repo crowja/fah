@@ -42,7 +42,7 @@ Read sequence data in fasta format, write the N longest sequences to stdout.
 fah [-h] [-L LABEL] [-l LEN] [-n NUM] [-N NOISE] [-r] [-s SEED] [-t {DNA,RNA,PEPTIDE}]
 ```
 
-    Generate random sequences in fasta format.
+Generate random sequences in fasta format.
 
     optional arguments:
       -h, --help            show this help message and exit
