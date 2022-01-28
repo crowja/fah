@@ -80,6 +80,12 @@ if __name__ == "__main__":
 
         fah.select.main()
 
+    elif sys.argv[1] == "summary":
+        sys.argv.pop(1)
+        import fah.summary
+
+        fah.summary.main()
+
     else:
         print_msg_and_usage(
             f'{ansi_colors["red"]}[ERROR]{ansi_colors["reset"]} '
