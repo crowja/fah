@@ -32,7 +32,7 @@ def main():
 
     try:
         for seq in futils.fasta_reader(args.infile):
-            print(f"***DEBUG IN cat: {seq}")
+            ##print(f"***DEBUG IN cat: {seq}")
             if args.to_case == "upper":
                 futils.print_as_fasta(
                     header=seq[0], seqtxt=seq[1].upper(), width=args.width
