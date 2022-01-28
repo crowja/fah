@@ -1,8 +1,10 @@
 #! /usr/bin/env python3
 
+import importlib
 import inspect
 import os
 import sys
+import textwrap
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -15,6 +17,8 @@ ansi_colors = {
     "yellow": "\x1B[1;33m",
 }
 
+valid_tools = ["cat", "longest", "random", "select", "summary"]
+
 
 def print_msg_and_usage(msg=False):
     if msg:
@@ -24,13 +28,14 @@ def print_msg_and_usage(msg=False):
         # TODO
         """
     usage:
-    fah -h|--help.    TBD.
-    fah -V|--version. TBD.
-    fah XXX [ARGS].   TBD.
-    fah abc [ARGS].   TBD.
+    fah -h|--help.      print a help message and exit.
+    fah -V|--version.   print the version string and exit.
+    fah <tool> [ARGS].  run <tool>.
     """
     )
     print(f"{usage}")
+    tools = ", ".join(valid_tools) + "."
+    print(f"<tool> is one of {textwrap.fill(tools)}")
 
 
 def print_version():
@@ -38,6 +43,7 @@ def print_version():
 
 
 if __name__ == "__main__":
+
     if len(sys.argv) == 1:
         print_msg_and_usage()
         exit(0)
@@ -50,45 +56,15 @@ if __name__ == "__main__":
         print_msg_and_usage()
         exit(0)
 
-    elif sys.argv[1] == "XXX":
-        sys.argv.pop(1)
-        from fah import XXX
-
-        XXX.main()
-
-    elif sys.argv[1] == "cat":
-        sys.argv.pop(1)
-        import fah.cat
-
-        fah.cat.main()
-
-    elif sys.argv[1] == "longest":
-        sys.argv.pop(1)
-        import fah.longest
-
-        fah.longest.main()
-
-    elif sys.argv[1] == "random":
-        sys.argv.pop(1)
-        import fah.random
-
-        fah.random.main()
-
-    elif sys.argv[1] == "select":
-        sys.argv.pop(1)
-        import fah.select
-
-        fah.select.main()
-
-    elif sys.argv[1] == "summary":
-        sys.argv.pop(1)
-        import fah.summary
-
-        fah.summary.main()
+    elif sys.argv[1] in valid_tools:
+        print(f"Trying to import {sys.argv[1]}")
+        mod = importlib.import_module(f"fah.{sys.argv[1]}", package=None)
+        sys.argv.pop(1)  # remove tool name from cmdline args
+        mod.main()
 
     else:
         print_msg_and_usage(
             f'{ansi_colors["red"]}[ERROR]{ansi_colors["reset"]} '
-            f'fah: subcommand "{sys.argv[1]}" not recognized.'
+            f'fah: tool "{sys.argv[1]}" not recognized.'
         )
         exit(1)
