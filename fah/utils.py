@@ -108,7 +108,11 @@ def print_as_fasta(outfh=sys.stdout, header=False, seqtxt=False, width=0):
 
 def split_header(h):
     # Splits a valid header line into id and description.
-    return re.split(r"\s+", h, maxsplit=1)
+    info = re.split(r"\s+", h, maxsplit=1)
+    if len(info) == 1:
+        return info[0], ""
+    else:
+        return info
 
 
 if __name__ == "__main__":
