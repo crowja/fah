@@ -57,7 +57,7 @@ if __name__ == "__main__":
         exit(0)
 
     elif sys.argv[1] in valid_tools:
-        print(f"Trying to import {sys.argv[1]}")
+        ##print(f"Trying to import {sys.argv[1]}")
         mod = importlib.import_module(f"fah.{sys.argv[1]}", package=None)
         sys.argv.pop(1)  # remove tool name from cmdline args
         mod.main()

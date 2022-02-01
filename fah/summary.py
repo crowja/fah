@@ -65,13 +65,6 @@ def main():
         help="write seqid and size to stdout",
     )
     ap.add_argument(
-        "-w",
-        "--width",
-        type=int,
-        default=0,
-        help="width of sequence text, default written as a single line",
-    )
-    ap.add_argument(
         "infile", nargs="?", default=False, help="read from INFILE, default stdin"
     )
     args = ap.parse_args()
@@ -107,7 +100,7 @@ def main():
     print(f"shortest-nonzero\t{shortest}")
     print(f"total-chars\t{total_chars}")
 
-    n = min(3, len(lens))
+    n = min(10, len(lens))
     longest_lens = [lens[len(lens) - 1 - i] for i in range(n)]
     tmp = "\t".join([str(x) for x in longest_lens])
     print(f"longest\t{tmp}")
