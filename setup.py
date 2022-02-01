@@ -8,6 +8,7 @@ setup(
     author="John A. Crow",
     author_email="crowja@gmail.com",
     license="",
+    scripts=["bin/fah"],
     packages=["fah"],
     install_requires=[],
     classifiers=[
