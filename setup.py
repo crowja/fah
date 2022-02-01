@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="fah",
-    version="TBD",
+    version="1.0.2-dev0",
     description="Package providing fasta helpers",
     url="https://github.com/crowja/fah",
     author="John A. Crow",
