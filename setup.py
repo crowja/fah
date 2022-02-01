@@ -1,0 +1,19 @@
+from setuptools import setup
+
+setup(
+    name="fah",
+    version="TBD",
+    description="Package providing fasta helpers",
+    url="https://github.com/crowja/fah",
+    author="John A. Crow",
+    author_email="crowja@gmail.com",
+    license="",
+    packages=["fah"],
+    install_requires=[],
+    classifiers=[
+        "Development Status :: 1 - Planning",
+        "Intended Audience :: Science/Research",
+        "Operating System :: POSIX :: Linux",
+        "Programming Language :: Python :: 3.8",
+    ],
+)
