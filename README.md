@@ -2,6 +2,8 @@
 
 Simple toolkit for working with sequences in fasta format.
 
+## Tools
+
 ### `fah cat`
 
 ```
@@ -77,4 +79,9 @@ Select sequences by id.
 
 
 
+## Installing
+
+```
+python -m pip install git+https://github.com/crowja/fah.git
+```
 
