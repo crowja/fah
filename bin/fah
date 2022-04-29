@@ -17,7 +17,7 @@ ansi_colors = {
     "yellow": "\x1B[1;33m",
 }
 
-valid_tools = ["cat", "longest", "random", "select", "summary"]
+valid_tools = ["cat", "longest", "random", "select", "summary", "uniq"]
 
 
 def print_msg_and_usage(msg=False):
