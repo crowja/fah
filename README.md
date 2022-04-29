@@ -77,7 +77,21 @@ Select sequences by id.
       -i ID, --id ID        id of sequence to select, can appear multiple times
       -f FILE, --file FILE  file with ids of sequences to select, one per line
 
+### `fah uniq`
 
+```
+fah uniq [-h] [-p PREFIX] [infile]
+```
+
+Read sequence data in fasta format, write unique sequences to stdout.
+
+    positional arguments:
+      infile                read from INFILE, default stdin
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      -p PREFIX, --prefix PREFIX
+                            prefix for sequence ids
 
 ## Installing
 

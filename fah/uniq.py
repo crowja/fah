@@ -6,7 +6,7 @@ import fah.utils as futils
 
 def main():
     ap = argparse.ArgumentParser(
-        prog="fah uniquify",
+        prog="fah uniq",
         description="""
         Read sequence data in fasta format, write unique sequences to stdout.
         """,
