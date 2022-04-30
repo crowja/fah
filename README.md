@@ -23,6 +23,24 @@ header line and a single line of sequence text.
       -w WIDTH, --width WIDTH
                             width of sequence text, default written as a single line
 
+### `fah cull`
+
+```
+fah cull [-h] [-m MIN_LENGTH] [-M MAX_LENGTH] [infile]
+```
+
+    Read sequence data in fasta format, conditionally remove sequences.
+
+    positional arguments:
+      infile                read from INFILE, default stdin
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      -m MIN_LENGTH, --min-length MIN_LENGTH
+                            minimum sequence length to retain, default 0
+      -M MAX_LENGTH, --max-length MAX_LENGTH
+                            maximum sequence length to retain, default no limit
+
 ### `fah longest`
 
 ```
