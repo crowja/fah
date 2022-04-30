@@ -22,7 +22,7 @@ def main():
         "--reverse",
         action="store_true",
         default=False,
-        help="reverse the size criteron, that is, print the N shortest sequences",
+        help="reverse the size criterion, that is, print the N shortest sequences",
     )
     ap.add_argument(
         "infile", nargs="?", default=False, help="read from INFILE, default stdin"
