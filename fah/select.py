@@ -47,7 +47,7 @@ def main():
     try:
         for seq in futils.fasta_reader(args.infile):
             hh = futils.split_header(seq[0])
-            print(f"***{hh}***")
+            ##print(f"***{hh}***")
             if hh[0] and hh[0] in ids:
                 futils.print_as_fasta(header=seq[0], seqtxt=seq[1])
     except Exception as e:
