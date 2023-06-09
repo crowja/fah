@@ -5,7 +5,7 @@ import math
 import random
 import re
 import sys
-import fah.utils
+import fah.utils as futils
 
 
 def main():
@@ -50,11 +50,26 @@ def main():
         "-s", "--seed", type=int, default=False, help="random number generator seed"
     )
     ap.add_argument(
+        "--shuffle",
+        action="store_true",
+        default=False,
+        help="""
+        read sequences from a file, print a shuffled version of each, all other
+        options except --label are ignored.
+        """,
+    )
+    ap.add_argument(
         "-t",
         "--type",
         choices=["DNA", "RNA", "PEPTIDE"],
         default="DNA",
         help="type of sequence(s) to generate, default DNA",
+    )
+    ap.add_argument(
+        "infile",
+        nargs="?",
+        default=False,
+        help="file to shuffle when using --shuffle, default stdin.",
     )
     args = ap.parse_args()
 
@@ -64,6 +79,20 @@ def main():
         tmp = re.sub(r"\W+", "_", args.label.strip())
         if tmp:  # skip if args.label was all whitespace.
             prefix = tmp + ":"
+
+    if args.shuffle:
+        count = 0
+        try:
+            for seq in futils.fasta_reader(args.infile):
+                count += 1
+                s = list(seq[1])
+                random.shuffle(s)
+                ##futils.print_as_fasta(header=seq[0], seqtxt="".join(s))
+                print(f">{prefix}{count} {seq[0]}\n{''.join(s)}")
+        except Exception as e:
+            print("BARF", e)  # TODO
+            pass
+        exit(0)
 
     if args.noise < 0 or args.noise > 100:
         print(
