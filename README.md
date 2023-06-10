@@ -59,10 +59,15 @@ Read sequence data in fasta format, write the N longest sequences to stdout.
 ### `fah random`
 
 ```
-fah [-h] [-L LABEL] [-l LEN] [-n NUM] [-N NOISE] [-r] [-s SEED] [-t {DNA,RNA,PEPTIDE}]
+fah [-h] [-L LABEL] [-l LEN] [-n NUM] [-N NOISE] [-r] [-s SEED] [--shuffle]
+           [-t {DNA,RNA,PEPTIDE}]
+           [infile]
 ```
 
 Generate random sequences in fasta format.
+
+    positional arguments:
+      infile                file to shuffle when using --shuffle, default stdin.
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -74,10 +79,15 @@ Generate random sequences in fasta format.
                             noise percentage, default 0.0
       -r, --rand            sequences have random length with mean LEN
       -s SEED, --seed SEED  random number generator seed
+      --shuffle             read sequences from a file, print a shuffled version of each,
+                            all other options except --label are ignored.
       -t {DNA,RNA,PEPTIDE}, --type {DNA,RNA,PEPTIDE}
                             type of sequence(s) to generate, default DNA
 
-    Specify SEED to generate the same sequences.
+Standard mode generates random sequences de novo, specify SEED to generate the same sequences.
+Shuffle mode (--shuffle) shuffles the characters in an input set of sequences; the composition of
+each input sequence remains the same but the character order changes.
+
 
 ### `fah select`
 
