@@ -88,6 +88,22 @@ Standard mode generates random sequences de novo, specify SEED to generate the s
 Shuffle mode (--shuffle) shuffles the characters in an input set of sequences; the composition of
 each input sequence remains the same but the character order changes.
 
+### `fah relabel`
+
+```
+fah relabel [-h] [-M SEQID_MAPS] [infile]
+```
+
+Read sequence data in fasta format, selectively change seqids.
+
+    positional arguments:
+      infile                read from INFILE, default stdin
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      -M SEQID_MAPS, --seqid-maps SEQID_MAPS
+                            File with original-to-new seqid maps, tab-separated
+
 
 ### `fah select`
 
