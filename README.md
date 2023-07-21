@@ -46,8 +46,9 @@ optional arguments:
 
 ```
 
-Split input sequences into chunks of size CHUNK_SIZE. The final chunk might not be
-full length; if it's shorter than CHUNK_SIZE/2 it's not printed unless --all is specified.
+Split input sequences into chunks of size `CHUNK\_SIZE`. The final chunk might not be
+full length; if it's shorter than `CHUNK\_SIZE/2` it's not printed unless `--all` is
+specified.
 
 ### `fah cull`
 
