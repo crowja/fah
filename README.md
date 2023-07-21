@@ -44,9 +44,10 @@ optional arguments:
                         Partition a sequence into chunks of size CHUNK_SIZE, default 1000
   -t TAG, --tag TAG     Prefix each new seqid with TAG
 
+```
+
 Split input sequences into chunks of size CHUNK_SIZE. The final chunk might not be
 full length; if it's shorter than CHUNK_SIZE/2 it's not printed unless --all is specified.
-```
 
 ### `fah cull`
 
