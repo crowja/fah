@@ -1,4 +1,4 @@
-# fah 1.0.11-dev0
+# fah 1.1.0-dev0
 
 Simple toolkit for working with sequences in fasta format.
 
