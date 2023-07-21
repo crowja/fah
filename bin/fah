@@ -19,6 +19,7 @@ ansi_colors = {
 
 valid_tools = [
     "cat",
+    "chunkify",
     "cull",
     "longest",
     "random",
